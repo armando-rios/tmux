@@ -2,9 +2,9 @@
 # setting the locale, some users have issues with different locales, this forces the correct one
 export LC_ALL=en_US.UTF-8
 
-main() 
+main()
 {
-  # Catppuccin Mocha Colors
+  # Catppuccin Mocha Colors (oficiales)
   rosewater="#F5E0DC"
   flamingo="#F2CDCD"
   pink="#F5C2E7"
@@ -32,5 +32,13 @@ main()
   mantle="#181825"
   crust="#11111B"
   background="#1e1e2e"
+
+  sep_left=""
+  sep_right=""
+  left_icon=""
+  on_icon=""
+  off_icon=""
 }
+
+# run main function
 main
