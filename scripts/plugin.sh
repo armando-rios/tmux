@@ -39,6 +39,9 @@ main()
   on_icon=""
   off_icon=""
 
+  # Status bar
+  tmux set-option -g status-style "bg=${background},fg=${text}"
+
   # Status left
   tmux set-option -g status-left "#[bg=${blue},fg=${base}]#{?client_prefix,#[bg=${green}],} ${left_icon} #H #[fg=${blue},bg=${background}]#{?client_prefix,#[fg=${green}],}${sep_left} "
 
