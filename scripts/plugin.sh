@@ -38,6 +38,17 @@ main()
   left_icon=""
   on_icon=""
   off_icon=""
+
+  # Status left
+  tmux set-option -g status-left "#[bg=${blue},fg=${base}]#{?client_prefix,#[bg=${green}],} ${left_icon} #H #[fg=${blue},bg=${background}]#{?client_prefix,#[fg=${green}],}${sep_left} "
+
+  # Window option
+  tmux set-window-option -g window-status-current-format "#[fg=${background},bg=${mauve}]${sep_left}#[fg=${surface0},bg=${mauve}]   #W #[fg=${mauve},bg=${background}]${sep_left}"
+
+  tmux set-window-option -g window-status-format "#[fg=${background},bg=${red}]${sep_left}#[fg=${text},bg=${red}]   #W #[fg=${red},bg=${background}]${sep_left}"
+
+  tmux set-window-option -g window-status-activity-style "bold"
+  tmux set-window-option -g window-status-bell-style "bold"
 }
 
 # run main function
