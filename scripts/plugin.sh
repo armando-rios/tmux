@@ -4,7 +4,7 @@ export LC_ALL=en_US.UTF-8
 
 main() 
 {
-  # Catppuccin Mocha Colors (oficiales)
+  # Catppuccin Mocha Colors
   rosewater="#F5E0DC"
   flamingo="#F2CDCD"
   pink="#F5C2E7"
@@ -32,8 +32,5 @@ main()
   mantle="#181825"
   crust="#11111B"
   background="#1e1e2e"
-
-  tmux set -g status-left "#[fg=#ff79c6]#S #[fg=white]⏎"
-  tmux set -g status-right "#[fg=#ff79c6]#H #[fg=white]⏎"
 }
 main
