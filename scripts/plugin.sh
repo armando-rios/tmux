@@ -58,7 +58,7 @@ main()
   tmux set-option -g status-right ""
 
   # cwd
-  tmux set-option -g status-right "#[fg=${rose},bg=${background}]${sep_right}#[fg=${surface0},bg=${rose}]  #(~/path/to/cwd.sh) #[fg=${background},bg=${rose}]${sep_right}"
+  tmux set-option -g status-right "#[fg=${pink},bg=${background}]${sep_right}#[fg=${surface0},bg=${pink}]  #(~/path/to/cwd.sh) #[fg=${background},bg=${pink}]${sep_right}"
 }
 
 # run main function
