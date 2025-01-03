@@ -2,6 +2,8 @@
 # setting the locale, some users have issues with different locales, this forces the correct one
 export LC_ALL=en_US.UTF-8
 
+current_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 main()
 {
   # Catppuccin Mocha Colors (oficiales)
@@ -58,7 +60,7 @@ main()
   tmux set-option -g status-right ""
 
   # cwd
-  tmux set-option -g status-right "#[fg=${pink},bg=${background}]${sep_right}#[fg=${surface0},bg=${pink}]  #(~/path/to/cwd.sh) #[fg=${background},bg=${pink}]${sep_right}"
+  tmux set-option -g status-right "#[fg=${pink},bg=${background}]${sep_right}#[fg=${surface0},bg=${pink}]  #(${current_dir}/cwd.sh) #[fg=${background},bg=${pink}]${sep_right}"
 }
 
 # run main function
