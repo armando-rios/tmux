@@ -49,13 +49,13 @@ main()
   tmux set-window-option -g window-status-current-format "#[fg=${background},bg=${red}]${sep_left}#[fg=${surface0},bg=${red}]   #W #[fg=${red},bg=${background}]${sep_left}"
 
   # Window option off
-  tmux set-window-option -g window-status-format "#[fg=${background},bg=${mauve}]${sep_left}#[fg=${surface0},bg=${mauve}]   #W #[fg=${mauve},bg=${background}]${sep_left}"
+  tmux set-window-option -g window-status-format "#[fg=${background},bg=${mauve}]${sep_left}#[fg=${surface0},bg=${mauve}]   #W #[fg=${},bg=${background}]${sep_left}"
 
   tmux set-window-option -g window-status-activity-style "bold"
   tmux set-window-option -g window-status-bell-style "bold"
 
   # Status right
-  tmux set-option
+  tmux set-option -g status-right ""
 }
 
 # run main function
