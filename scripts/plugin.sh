@@ -33,7 +33,7 @@ main()
   base="#1E1E2E"
   mantle="#181825"
   crust="#11111B"
-  background="#1e1e2e"
+  background="#1E1E2E"
 
   sep_left=""
   sep_right=""
