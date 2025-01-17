@@ -37,6 +37,7 @@ main()
 
   sep_left=""
   sep_right=""
+  divider=""
   left_icon=""
   on_icon=""
   off_icon=""
@@ -48,10 +49,10 @@ main()
   tmux set-option -g status-left "#[bg=${blue},fg=${base}]#{?client_prefix,#[bg=${green}],} ${left_icon} #H #[fg=${blue},bg=${background}]#{?client_prefix,#[fg=${green}],}${sep_left} "
 
   # Window option on
-  tmux set-window-option -g window-status-current-format "#[fg=${background},bg=${red}]${sep_left}#[fg=${surface0},bg=${red}]   #W #[fg=${red},bg=${background}]${sep_left}"
+  tmux set-window-option -g window-status-current-format "#[fg=${red},bg=${background}]${divider}#[fg=${surface0},bg=${red}]   #W #[fg=${red},bg=${background}]${sep_left}"
 
   # Window option off
-  tmux set-window-option -g window-status-format "#[fg=${background},bg=${mauve}]${sep_left}#[fg=${surface0},bg=${mauve}]   #W #[fg=${mauve},bg=${background}]${sep_left}"
+  tmux set-window-option -g window-status-format "#[fg=${mauve},bg=${background}]${divider}#[fg=${surface0},bg=${mauve}]   #W #[fg=${mauve},bg=${background}]${sep_left}"
 
   tmux set-window-option -g window-status-activity-style "bold"
   tmux set-window-option -g window-status-bell-style "bold"
@@ -60,7 +61,7 @@ main()
   tmux set-option -g status-right ""
 
   # cwd
-  tmux set-option -g status-right "#[fg=${pink},bg=${background}]${sep_right}#[fg=${surface0},bg=${pink}]  #(${current_dir}/cwd.sh) #[fg=${background},bg=${pink}]${sep_right}"
+  tmux set-option -g status-right "#[fg=${pink},bg=${background}]${sep_right}#[fg=${surface0},bg=${pink}]  #(${current_dir}/cwd.sh) "
 }
 
 # run main function
