@@ -4,7 +4,7 @@
 cpu=$(top -bn1 | grep "Cpu(s)" | awk '{print $2 + $4}')
 
 # Obtener uso de RAM
-ram=$(free -m | awk '/Mem:/ {printf "%dMB/%dMB", $3, $2}')
+ram=$(free -m | awk '/Mem:/ {printf "%.1fGB", $3 /1024}')
 
 # Mostrar información del sistema
-echo "  ${cpu}%   ${ram}"
+echo " ${cpu}%  ${ram} "
