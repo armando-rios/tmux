@@ -1,6 +1,7 @@
 # Tmux Powerline Bar - Catppuccin Theme
 
 Tmux Powerline Bar is a Tmux plugin that enhances the status bar visualization, providing a modern and customizable experience with Catppuccin as the default theme.
+
 ![Tmux Powerline Bar Preview](assets/screenshot.png)
 
 ## ✨ Features
