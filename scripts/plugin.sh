@@ -4,7 +4,10 @@ current_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # Cargar colores desde archivo externo
 source "${current_dir}/colors.sh"
-echo "${colors[background]}"
+
+# Leer opciones desde .tmux.conf
+show_clock=$(tmux show-option -gqv @tmux_status_show_clock)
+show_sysinfo=$(tmux show-option -gqv @tmux_status_show_sysinfo)
 
 # Símbolos y separadores
 sep_left=""
@@ -19,7 +22,7 @@ set_status_bar() {
 }
 
 set_status_left() {
-  tmux set-option -g status-left "#[bg=${colors[blue]},fg=${colors[background]}]#{?client_prefix,#[bg=${colors[green]}],} ${left_icon} #H #[fg=${colors[blue]},bg=${colors[background]}]#{?client_prefix,#[fg=${colors[green]}],}${sep_left} "
+  tmux set-option -g status-left "#[bg=${colors[blue]},fg=${colors[background]}]#{?client_prefix,#[bg=${colors[green]}],} ${left_icon} #H #[fg=${colors[blue}],bg=${colors[background]}]#{?client_prefix,#[fg=${colors[green]}],}${sep_left} "
 }
 
 set_window_options() {
@@ -30,7 +33,17 @@ set_window_options() {
 }
 
 set_status_right() {
-  tmux set-option -g status-right ""
+  status_right=""
+  
+  if [[ "$show_clock" == "on" ]]; then
+    status_right+="#[fg=${colors[lavender]},bg=${colors[background]}]${sep_right} #[fg=${colors[text]},bg=${colors[lavender]}]  %H:%M %d-%m-%Y "
+  fi
+
+  if [[ "$show_sysinfo" == "on" ]]; then
+    status_right+="#[fg=${colors[green]},bg=${colors[background]}]${sep_right}#[fg=${colors[surface0]},bg=${colors[green]}] #(sh ${current_dir}/sysinfo.sh)"
+  fi
+  
+  tmux set-option -g status-right "$status_right"
 }
 
 main() {
