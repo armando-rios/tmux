@@ -37,7 +37,7 @@ set_status_right() {
   status_right=""
 
   if [[ "$show_cwd" == "on" ]]; then
-    status_right+="#[fg=${colors[pink]},bg=${colors[background]}]${sep_right}#[fg=${colors[surface0]},bg=${colors[pink]}]  #(sh ${current_dir}/cwd.sh)"
+    status_right+="#[fg=${colors[pink]},bg=${colors[background]}]${sep_right}#[fg=${colors[surface0]},bg=${colors[pink]}]  #(sh ${current_dir}/cwd.sh) "
   fi
   
   if [[ "$show_clock" == "on" ]]; then
