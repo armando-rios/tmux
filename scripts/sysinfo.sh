@@ -7,4 +7,4 @@ cpu=$(top -bn1 | grep "Cpu(s)" | awk '{print $2 + $4}')
 ram=$(free -m | awk '/Mem:/ {printf "%dMB/%dMB", $3, $2}')
 
 # Mostrar información del sistema
-echo "  ${cpu}%   ${ram}"
+echo "  ${cpu}%   ${ram}"

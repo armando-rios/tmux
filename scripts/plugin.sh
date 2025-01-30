@@ -22,7 +22,7 @@ set_status_bar() {
 }
 
 set_status_left() {
-  tmux set-option -g status-left "#[bg=${colors[blue]},fg=${colors[background]}]#{?client_prefix,#[bg=${colors[green]}],} ${left_icon} #H #[fg=${colors[blue}],bg=${colors[background]}]#{?client_prefix,#[fg=${colors[green]}],}${sep_left} "
+  tmux set-option -g status-left "#[bg=${colors[blue]},fg=${colors[background]}]#{?client_prefix,#[bg=${colors[green]}],} ${left_icon} #H #[fg=${colors[blue]},bg=${colors[background]}]#{?client_prefix,#[fg=${colors[green]}],}${sep_left} "
 }
 
 set_window_options() {
@@ -36,11 +36,11 @@ set_status_right() {
   status_right=""
   
   if [[ "$show_clock" == "on" ]]; then
-    status_right+="#[fg=${colors[lavender]},bg=${colors[background]}]${sep_right} #[fg=${colors[text]},bg=${colors[lavender]}]  %H:%M %d-%m-%Y "
+    status_right+="#[fg=${colors[lavender]},bg=${colors[background]}]${sep_right}#[fg=${colors[surface0]},bg=${colors[lavender]}]  %H:%M %d-%m-%Y "
   fi
 
   if [[ "$show_sysinfo" == "on" ]]; then
-    status_right+="#[fg=${colors[green]},bg=${colors[background]}]${sep_right}#[fg=${colors[surface0]},bg=${colors[green]}] #(sh ${current_dir}/sysinfo.sh)"
+    status_right+="#[fg=${colors[sapphire]},bg=${colors[lavender]}]${sep_right}#[fg=${colors[surface0]},bg=${colors[sapphire]}] #(sh ${current_dir}/sysinfo.sh)"
   fi
   
   tmux set-option -g status-right "$status_right"
