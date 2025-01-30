@@ -6,6 +6,7 @@ current_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source "${current_dir}/colors.sh"
 
 # Leer opciones desde .tmux.conf
+show_cwd=$(tmux show-option -gqv @tmux_status_show_cwd)
 show_clock=$(tmux show-option -gqv @tmux_status_show_clock)
 show_sysinfo=$(tmux show-option -gqv @tmux_status_show_sysinfo)
 
