@@ -6,6 +6,7 @@ current_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source "${current_dir}/colors.sh"
 
 # Leer opciones desde .tmux.conf
+transparent_mode=$(tmux show-option -gqv @tmux_transparent)
 show_cwd=$(tmux show-option -gqv @tmux_status_show_cwd)
 show_clock=$(tmux show-option -gqv @tmux_status_show_clock)
 show_sysinfo=$(tmux show-option -gqv @tmux_status_show_sysinfo)
@@ -17,6 +18,10 @@ divider=""
 left_icon=""
 on_icon=""
 off_icon=""
+
+if [[ "$transparent_mode" == "on" ]]; then
+  colors[background]=default
+fi
 
 set_status_bar() {
   tmux set-option -g status-style "bg=${colors[background]},fg=${colors[text]}"
