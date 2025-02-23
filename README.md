@@ -30,6 +30,7 @@ Then reload tmux and run `prefix + I` to install it.
 You can customize the plugin by adding options to your `.tmux.conf`:
 
 ```bash
+set -g @tmux_transparent "on"         # Enable transparency
 set -g @tmux_status_show_clock "on"   # Show clock
 set -g @tmux_status_show_sysinfo "on" # Show CPU and RAM usage
 set -g @tmux_status_show_cwd "on"     # Show current directory
