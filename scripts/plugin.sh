@@ -23,12 +23,12 @@ set_status_bar() {
 }
 
 set_status_left() {
-  tmux set-option -g status-left "#[bg=${colors[blue]},fg=${colors[background]}]#{?client_prefix,#[bg=${colors[green]}],} ${left_icon} #H #[fg=${colors[blue]},bg=${colors[background]}]#{?client_prefix,#[fg=${colors[green]}],}${sep_left} "
+  tmux set-option -g status-left "#[bg=${colors[blue]},fg=${colors[base]}]#{?client_prefix,#[bg=${colors[green]}],} ${left_icon} #H #[fg=${colors[blue]},bg=${colors[background]}]#{?client_prefix,#[fg=${colors[green]}],}${sep_left} "
 }
 
 set_window_options() {
-  tmux set-window-option -g window-status-current-format "#[fg=${colors[red]},bg=${colors[background]}]${divider}#[fg=${colors[surface0]},bg=${colors[red]}] ${on_icon}  #W #[fg=${colors[red]},bg=${colors[background]}]${sep_left}"
-  tmux set-window-option -g window-status-format "#[fg=${colors[mauve]},bg=${colors[background]}]${divider}#[fg=${colors[surface0]},bg=${colors[mauve]}] ${off_icon}  #W #[fg=${colors[mauve]},bg=${colors[background]}]${sep_left}"
+  tmux set-window-option -g window-status-current-format "#[fg=${colors[red]},bg=${colors[background]}]${divider}#[fg=${colors[base]},bg=${colors[red]}] ${on_icon}  #W #[fg=${colors[red]},bg=${colors[background]}]${sep_left}"
+  tmux set-window-option -g window-status-format "#[fg=${colors[mauve]},bg=${colors[background]}]${divider}#[fg=${colors[base]},bg=${colors[mauve]}] ${off_icon}  #W #[fg=${colors[mauve]},bg=${colors[background]}]${sep_left}"
   tmux set-window-option -g window-status-activity-style "bold"
   tmux set-window-option -g window-status-bell-style "bold"
 }
@@ -38,17 +38,17 @@ set_status_right() {
   last_bg="${colors[background]}"
 
   if [[ "$show_cwd" == "on" ]]; then
-    status_right+="#[fg=${colors[pink]},bg=${last_bg}]${sep_right}#[fg=${colors[surface0]},bg=${colors[pink]}]  #(sh ${current_dir}/cwd.sh) "
+    status_right+="#[fg=${colors[pink]},bg=${last_bg}]${sep_right}#[fg=${colors[base]},bg=${colors[pink]}]  #(sh ${current_dir}/cwd.sh) "
     last_bg="${colors[pink]}"
   fi
 
   if [[ "$show_sysinfo" == "on" ]]; then
-    status_right+="#[fg=${colors[sapphire]},bg=${last_bg}]${sep_right}#[fg=${colors[surface0]},bg=${colors[sapphire]}] #(sh ${current_dir}/sysinfo.sh) "
+    status_right+="#[fg=${colors[sapphire]},bg=${last_bg}]${sep_right}#[fg=${colors[base]},bg=${colors[sapphire]}] #(sh ${current_dir}/sysinfo.sh) "
     last_bg="${colors[sapphire]}"
   fi
 
   if [[ "$show_clock" == "on" ]]; then
-    status_right+="#[fg=${colors[lavender]},bg=${last_bg}]${sep_right}#[fg=${colors[surface0]},bg=${colors[lavender]}]  %H:%M "
+    status_right+="#[fg=${colors[lavender]},bg=${last_bg}]${sep_right}#[fg=${colors[base]},bg=${colors[lavender]}]  %H:%M "
   fi
 
   tmux set-option -g status-right "$status_right"
