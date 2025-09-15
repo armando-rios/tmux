@@ -34,7 +34,20 @@ set -g @tmux_transparent "on"         # Enable transparency
 set -g @tmux_status_show_clock "on"   # Show clock
 set -g @tmux_status_show_sysinfo "on" # Show CPU and RAM usage
 set -g @tmux_status_show_cwd "on"     # Show current directory
+
+# Customize element order and visibility
+set -g @tmux_status_format "cwd|sysinfo|clock"  # Default order
+set -g @tmux_status_format "clock|cwd"          # Only clock and directory
+set -g @tmux_status_format "sysinfo|clock|cwd"  # Custom order
+set -g @tmux_status_format "cwd"                # Only current directory
 ```
+
+### 📝 Available Elements
+- `cwd` - Current working directory
+- `sysinfo` - CPU and RAM usage 
+- `clock` - Current time (HH:MM format)
+
+Use `|` to separate elements in your desired order.
 
 ## 🚀 Usage
 After installing and configuring, reload Tmux:

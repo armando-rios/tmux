@@ -41,12 +41,34 @@ transparent_mode=$(tmux show-option -gqv @tmux_transparent)
 show_cwd=$(tmux show-option -gqv @tmux_status_show_cwd)
 show_clock=$(tmux show-option -gqv @tmux_status_show_clock)
 show_sysinfo=$(tmux show-option -gqv @tmux_status_show_sysinfo)
+status_format=$(tmux show-option -gqv @tmux_status_format)
 
 # Establecer valores por defecto si no están configurados
 [[ -z "$transparent_mode" ]] && transparent_mode="off"
 [[ -z "$show_cwd" ]] && show_cwd="on"
 [[ -z "$show_clock" ]] && show_clock="on"
 [[ -z "$show_sysinfo" ]] && show_sysinfo="on"
+[[ -z "$status_format" ]] && status_format="cwd|sysinfo|clock"
+
+# Función para validar formato
+validate_format() {
+  local format="$1"
+  local valid_elements="cwd sysinfo clock"
+  
+  # Dividir formato por |
+  IFS='|' read -ra elements <<< "$format"
+  
+  for element in "${elements[@]}"; do
+    if [[ ! " $valid_elements " =~ " $element " ]]; then
+      echo "Warning: Unknown status element '$element'. Valid elements: $valid_elements" >&2
+      return 1
+    fi
+  done
+  return 0
+}
+
+# Validar formato configurado
+validate_format "$status_format"
 
 # Símbolos y separadores
 sep_left=""
@@ -75,23 +97,60 @@ set_window_options() {
   tmux set-window-option -g window-status-bell-style "bold"
 }
 
+# Función para generar elemento individual
+generate_element() {
+  local element="$1"
+  local last_bg="$2"
+  local result=""
+  
+  case "$element" in
+    "cwd")
+      if [[ "$show_cwd" == "on" ]]; then
+        result="#[fg=${colors[cwd]},bg=${last_bg}]${sep_right}#[fg=${colors[base]},bg=${colors[cwd]}]  #(sh ${current_dir}/cwd.sh) "
+        echo "$result|${colors[cwd]}"
+      else
+        echo "|$last_bg"
+      fi
+      ;;
+    "sysinfo")
+      if [[ "$show_sysinfo" == "on" ]]; then
+        result="#[fg=${colors[sysinfo]},bg=${last_bg}]${sep_right}#[fg=${colors[base]},bg=${colors[sysinfo]}] #(sh ${current_dir}/sysinfo.sh) "
+        echo "$result|${colors[sysinfo]}"
+      else
+        echo "|$last_bg"
+      fi
+      ;;
+    "clock")
+      if [[ "$show_clock" == "on" ]]; then
+        result="#[fg=${colors[clock]},bg=${last_bg}]${sep_right}#[fg=${colors[base]},bg=${colors[clock]}]  %H:%M "
+        echo "$result|${colors[clock]}"
+      else
+        echo "|$last_bg"
+      fi
+      ;;
+    *)
+      echo "|$last_bg"
+      ;;
+  esac
+}
+
 set_status_right() {
   status_right=""
   last_bg="${colors[background]}"
-
-  if [[ "$show_cwd" == "on" ]]; then
-    status_right+="#[fg=${colors[cwd]},bg=${last_bg}]${sep_right}#[fg=${colors[base]},bg=${colors[cwd]}]  #(sh ${current_dir}/cwd.sh) "
-    last_bg="${colors[cwd]}"
-  fi
-
-  if [[ "$show_sysinfo" == "on" ]]; then
-    status_right+="#[fg=${colors[sysinfo]},bg=${last_bg}]${sep_right}#[fg=${colors[base]},bg=${colors[sysinfo]}] #(sh ${current_dir}/sysinfo.sh) "
-    last_bg="${colors[sysinfo]}"
-  fi
-
-  if [[ "$show_clock" == "on" ]]; then
-    status_right+="#[fg=${colors[clock]},bg=${last_bg}]${sep_right}#[fg=${colors[base]},bg=${colors[clock]}]  %H:%M "
-  fi
+  
+  # Dividir formato por |
+  IFS="|" read -ra elements <<< "$status_format"
+  
+  # Generar elementos en el orden especificado
+  for element in "${elements[@]}"; do
+    element_result=$(generate_element "$element" "$last_bg")
+    element_content="${element_result%|*}"
+    last_bg="${element_result#*|}"
+    
+    if [[ -n "$element_content" ]]; then
+      status_right+="$element_content"
+    fi
+  done
 
   tmux set-option -g status-right "$status_right"
 }
