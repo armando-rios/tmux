@@ -2,14 +2,51 @@
 export LC_ALL=en_US.UTF-8
 current_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+# Validar dependencias
+check_dependencies() {
+  # Verificar versión de tmux
+  if ! command -v tmux >/dev/null 2>&1; then
+    echo "Error: tmux is not installed" >&2
+    exit 1
+  fi
+  
+  local tmux_version=$(tmux -V | cut -d' ' -f2 | tr -d 'a-zA-Z')
+  local required_version="3.0"
+  
+  if ! command -v bc >/dev/null 2>&1; then
+    # Fallback simple sin bc
+    local major=$(echo "$tmux_version" | cut -d'.' -f1)
+    if [[ "$major" -lt 3 ]]; then
+      echo "Warning: tmux version $tmux_version may not be fully supported (requires 3.0+)" >&2
+    fi
+  else
+    if (( $(echo "$tmux_version < $required_version" | bc -l) )); then
+      echo "Warning: tmux version $tmux_version may not be fully supported (requires 3.0+)" >&2
+    fi
+  fi
+}
+
+# Ejecutar validación de dependencias
+check_dependencies
+
 # Cargar colores desde archivo externo
+if [[ ! -f "${current_dir}/colors.sh" ]]; then
+  echo "Error: colors.sh not found in ${current_dir}" >&2
+  exit 1
+fi
 source "${current_dir}/colors.sh"
 
-# Leer opciones desde .tmux.conf
+# Leer opciones desde .tmux.conf con valores por defecto
 transparent_mode=$(tmux show-option -gqv @tmux_transparent)
 show_cwd=$(tmux show-option -gqv @tmux_status_show_cwd)
 show_clock=$(tmux show-option -gqv @tmux_status_show_clock)
 show_sysinfo=$(tmux show-option -gqv @tmux_status_show_sysinfo)
+
+# Establecer valores por defecto si no están configurados
+[[ -z "$transparent_mode" ]] && transparent_mode="off"
+[[ -z "$show_cwd" ]] && show_cwd="on"
+[[ -z "$show_clock" ]] && show_clock="on"
+[[ -z "$show_sysinfo" ]] && show_sysinfo="on"
 
 # Símbolos y separadores
 sep_left=""
