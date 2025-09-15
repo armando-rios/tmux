@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 path=$(tmux display-message -p "#{pane_current_path}")
 
