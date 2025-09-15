@@ -29,12 +29,12 @@ check_dependencies() {
 # Ejecutar validación de dependencias
 check_dependencies
 
-# Cargar colores desde archivo externo
-if [[ ! -f "${current_dir}/colors.sh" ]]; then
-  echo "Error: colors.sh not found in ${current_dir}" >&2
+# Cargar sistema de temas
+if [[ ! -f "${current_dir}/themes.sh" ]]; then
+  echo "Error: themes.sh not found in ${current_dir}" >&2
   exit 1
 fi
-source "${current_dir}/colors.sh"
+source "${current_dir}/themes.sh"
 
 # Leer opciones desde .tmux.conf con valores por defecto
 transparent_mode=$(tmux show-option -gqv @tmux_transparent)
@@ -42,6 +42,7 @@ show_cwd=$(tmux show-option -gqv @tmux_status_show_cwd)
 show_clock=$(tmux show-option -gqv @tmux_status_show_clock)
 show_sysinfo=$(tmux show-option -gqv @tmux_status_show_sysinfo)
 status_format=$(tmux show-option -gqv @tmux_status_format)
+theme=$(tmux show-option -gqv @tmux_theme)
 
 # Establecer valores por defecto si no están configurados
 [[ -z "$transparent_mode" ]] && transparent_mode="off"
@@ -49,6 +50,11 @@ status_format=$(tmux show-option -gqv @tmux_status_format)
 [[ -z "$show_clock" ]] && show_clock="on"
 [[ -z "$show_sysinfo" ]] && show_sysinfo="on"
 [[ -z "$status_format" ]] && status_format="cwd|sysinfo|clock"
+[[ -z "$theme" ]] && theme="mocha"
+
+# Inicializar array de colores y cargar tema
+declare -A colors
+set_theme_colors "$theme"
 
 # Función para validar formato
 validate_format() {
@@ -67,8 +73,21 @@ validate_format() {
   return 0
 }
 
-# Validar formato configurado
+# Función para validar tema
+validate_theme() {
+  local theme_name="$1"
+  
+  if ! is_valid_theme "$theme_name"; then
+    echo "Warning: Unknown theme '$theme_name'. Available themes: $(get_available_themes)" >&2
+    echo "Using default theme 'mocha'" >&2
+    return 1
+  fi
+  return 0
+}
+
+# Validar configuraciones
 validate_format "$status_format"
+validate_theme "$theme"
 
 # Símbolos y separadores
 sep_left=""

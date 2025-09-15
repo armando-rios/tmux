@@ -40,6 +40,17 @@ set -g @tmux_status_format "cwd|sysinfo|clock"  # Default order
 set -g @tmux_status_format "clock|cwd"          # Only clock and directory
 set -g @tmux_status_format "sysinfo|clock|cwd"  # Custom order
 set -g @tmux_status_format "cwd"                # Only current directory
+
+# Choose your favorite theme
+set -g @tmux_theme "mocha"          # Catppuccin Mocha (default)
+set -g @tmux_theme "latte"          # Catppuccin Latte (light)
+set -g @tmux_theme "frappe"         # Catppuccin Frappé
+set -g @tmux_theme "macchiato"      # Catppuccin Macchiato
+set -g @tmux_theme "dracula"        # Dracula theme
+set -g @tmux_theme "nord"           # Nord theme
+set -g @tmux_theme "gruvbox"        # Gruvbox Dark
+set -g @tmux_theme "tokyo-night"    # Tokyo Night
+set -g @tmux_theme "one-dark"       # One Dark
 ```
 
 ### 📝 Available Elements
@@ -48,6 +59,23 @@ set -g @tmux_status_format "cwd"                # Only current directory
 - `clock` - Current time (HH:MM format)
 
 Use `|` to separate elements in your desired order.
+
+### 🎨 Available Themes
+
+**Catppuccin Family:**
+- `mocha` - Dark theme with warm colors (default, matches your lualine setup)
+- `latte` - Light theme with vibrant colors
+- `frappe` - Dark theme with cooler tones
+- `macchiato` - Dark theme with balanced warmth
+
+**Popular Themes:**
+- `dracula` - Purple and pink vibrant colors
+- `nord` - Cool blue minimalist palette
+- `gruvbox` - Retro warm colors
+- `tokyo-night` - Modern blue night theme
+- `one-dark` - Classic VS Code theme
+
+All themes are carefully crafted to provide excellent contrast and readability.
 
 ## 🚀 Usage
 After installing and configuring, reload Tmux:
